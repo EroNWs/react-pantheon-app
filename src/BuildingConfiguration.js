@@ -30,7 +30,7 @@ function BuildingConfiguration() {
 
     const handleAddConfiguration = async () => {
         try {
-            const response = await axios.post('https://pathneonapi20230824160910.azurewebsites.net/api/BuildingConfiguration', {
+            await axios.post('https://pathneonapi20230824160910.azurewebsites.net/api/BuildingConfiguration', {
                 buildingType,
                 buildingCost,
                 constructionTime
