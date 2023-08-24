@@ -11,11 +11,14 @@ function BuildingConfiguration() {
     const [buildingCost, setBuildingCost] = useState('');
     const [constructionTime, setConstructionTime] = useState('');
 
-
     useEffect(() => {
         async function fetchData() {
-            const data = await fetchConfigurations(); // Call the fetchConfigurations function
-            setConfigurations(data); // Update the state with fetched data
+            try {
+                const data = await fetchConfigurations(); // Call the fetchConfigurations function
+                setConfigurations(data); // Update the state with fetched data
+            } catch (error) {
+                console.error('Error fetching configurations:', error);
+            }
         }
 
         fetchData(); // Call the fetchData function
