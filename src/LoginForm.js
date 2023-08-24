@@ -8,6 +8,7 @@ function LoginForm({ onClose }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+    const [loginMessage, setLoginMessage] = useState('');
 
     const handleLogin = async () => {
         try {
@@ -15,10 +16,13 @@ function LoginForm({ onClose }) {
                 username,
                 password
             });
-            // Handle successful login, e.g., redirect user or perform some action
+            // Handle successful login
+            setLoginMessage('Login successful!'); // Update login message state
+            setError(null); // Clear any previous error message
             console.log(response.data);
         } catch (error) {
             setError('Invalid credentials. Please try again.'); // Update error state
+            setLoginMessage(''); // Clear any previous login message
         }
     };
 
@@ -28,6 +32,7 @@ function LoginForm({ onClose }) {
             <input type="text" placeholder="Username" className="login-input" value={username} onChange={e => setUsername(e.target.value)} />
             <input type="password" placeholder="Password" className="login-input" value={password} onChange={e => setPassword(e.target.value)} />
             {error && <p className="error-message">{error}</p>}
+            {loginMessage && <p className="success-message">{loginMessage}</p>}
             <button className="login-button" onClick={handleLogin}>Login</button>
             <button className="login-button" onClick={onClose}>Close</button>
         </div>
