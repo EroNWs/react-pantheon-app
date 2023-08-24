@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { ThemeContext } from './ThemeContext';
 import './App.css';
 import axios from 'axios'; // Import Axios
-import { Link, Redirect } from 'react-router-dom'; // Import Link and Redirect components
+import { Link } from 'react-router-dom'; // Import Link and Redirect components
 
 function LoginForm({ setIsLoggedIn }) {
     const { theme } = useContext(ThemeContext);

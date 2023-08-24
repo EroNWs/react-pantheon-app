@@ -3,12 +3,9 @@ import { ThemeContext } from './ThemeContext';
 import './App.css';
 import { Link } from 'react-router-dom'; // Import Link component
 
-function Home({ setIsLoggedIn }) {
+function Home() {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
-  const handleLoginClick = () => {
-    setIsLoggedIn(true);
-  };
 
   return (
     <div className={theme + " buttons-container"}>
