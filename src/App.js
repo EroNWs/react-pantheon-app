@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react'; // Import React and hooks
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { ThemeContext } from './ThemeContext';
-import Home from './Home'; // Import Home component
-import LoginForm from './LoginForm'; // Import LoginForm component
-import SignUpForm from './SignUpForm'; // Import SignUpForm component
-import BuildingConfiguration from './BuildingConfiguration'; // Import BuildingConfiguration component
+import Home from './Home';
+import LoginForm from './LoginForm';
+import SignUpForm from './SignUpForm';
+import BuildingConfiguration from './BuildingConfiguration';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'; // Import Router components
 
 function App() {
     const [theme, setTheme] = useState('light'); 
-    const [showLogin, setShowLogin] = useState(false);
-    const [showSignUp, setShowSignUp] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Add isLoggedIn state
 
     useEffect(() => {
         document.body.className = theme; 
@@ -25,16 +25,24 @@ function App() {
 
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
-            <div className={`App ${theme}`}>
-                <Home 
-                    onLoginClick={() => setShowLogin(true)} 
-                    onSignUpClick={() => setShowSignUp(true)}
-                />
-                {showLogin && <LoginForm onClose={() => setShowLogin(false)} />}
-                {showSignUp && <SignUpForm onClose={() => setShowSignUp(false)} />}
-                
-                <BuildingConfiguration /> {/* Add BuildingConfiguration component */}
-            </div>
+            <Router>
+                <div className={`App ${theme}`}>
+                    <Switch>
+                        <Route path="/login">
+                            {isLoggedIn ? <Redirect to="/building-configuration" /> : <LoginForm setIsLoggedIn={setIsLoggedIn} />}
+                        </Route>
+                        <Route path="/sign-up">
+                            {isLoggedIn ? <Redirect to="/building-configuration" /> : <SignUpForm />}
+                        </Route>
+                        <Route path="/building-configuration">
+                            {isLoggedIn ? <BuildingConfiguration /> : <Redirect to="/login" />}
+                        </Route>
+                        <Route path="/">
+                            <Home setIsLoggedIn={setIsLoggedIn} />
+                        </Route>
+                    </Switch>
+                </div>
+            </Router>
         </ThemeContext.Provider>
     );
 }

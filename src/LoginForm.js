@@ -2,8 +2,9 @@ import React, { useContext, useState } from 'react';
 import { ThemeContext } from './ThemeContext';
 import './App.css';
 import axios from 'axios'; // Import Axios
+import { Link, Redirect } from 'react-router-dom'; // Import Link and Redirect components
 
-function LoginForm({ onClose }) {
+function LoginForm({ setIsLoggedIn }) {
     const { theme } = useContext(ThemeContext);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -19,6 +20,7 @@ function LoginForm({ onClose }) {
             // Handle successful login
             setLoginMessage('Login successful!'); // Update login message state
             setError(null); // Clear any previous error message
+            setIsLoggedIn(true); // Set isLoggedIn to true on successful login
             console.log(response.data);
         } catch (error) {
             setError('Invalid credentials. Please try again.'); // Update error state
@@ -34,7 +36,8 @@ function LoginForm({ onClose }) {
             {error && <p className="error-message">{error}</p>}
             {loginMessage && <p className="success-message">{loginMessage}</p>}
             <button className="login-button" onClick={handleLogin}>Login</button>
-            <button className="login-button" onClick={onClose}>Close</button>
+            {/* Use Link to navigate back to the home page */}
+            <Link to="/" className="login-button">Close</Link>
         </div>
     );
 }
