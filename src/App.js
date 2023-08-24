@@ -5,7 +5,7 @@ import Home from './Home';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
 import BuildingConfiguration from './BuildingConfiguration';
-import { BrowserRouter as Router, Route, Routes, Redirect } from 'react-router-dom'; // Import Redirect
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'; // Import Navigate
 
 function App() {
     const [theme, setTheme] = useState('light'); 
@@ -28,27 +28,10 @@ function App() {
             <Router>
                 <div className={`App ${theme}`}>
                     <Routes>
-                        <Route exact path='/'>
-                            <Home 
-                                isLoggedIn={isLoggedIn}
-                                setIsLoggedIn={setIsLoggedIn}
-                            />
-                        </Route>
-                        <Route path='/login'>
-                            <LoginForm 
-                                isLoggedIn={isLoggedIn}
-                                setIsLoggedIn={setIsLoggedIn}
-                            />
-                        </Route>
-                        <Route path='/sign-up'>
-                            <SignUpForm 
-                                isLoggedIn={isLoggedIn}
-                                setIsLoggedIn={setIsLoggedIn}
-                            />
-                        </Route>
-                        <Route path='/building-configuration'>
-                            {isLoggedIn ? <BuildingConfiguration /> : <Redirect to='/' />}
-                        </Route>
+                        <Route path='/' element={<Home isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+                        <Route path='/login' element={<LoginForm isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+                        <Route path='/sign-up' element={<SignUpForm isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+                        <Route path='/building-configuration' element={isLoggedIn ? <BuildingConfiguration /> : <Navigate to='/' />} />
                     </Routes>
                 </div>
             </Router>
