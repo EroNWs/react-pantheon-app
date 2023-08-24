@@ -10,14 +10,6 @@ function BuildingConfiguration() {
     const [buildingCost, setBuildingCost] = useState('');
     const [constructionTime, setConstructionTime] = useState('');
 
-    const fetchConfigurations = async () => {
-        try {
-            const response = await axios.get('https://pathneonapi20230824160910.azurewebsites.net/api/BuildingConfiguration');
-            setConfigurations(response.data);
-        } catch (error) {
-            console.error('Error fetching configurations:', error);
-        }
-    };
 
     useEffect(() => {
         fetchConfigurations();
