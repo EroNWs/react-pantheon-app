@@ -2,6 +2,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import { ThemeContext } from './ThemeContext';
 import { fetchConfigurations } from './api'; // Import the fetchConfigurations function
 import axios from 'axios';
+import './BuildingConfiguration.css'; // Import the CSS file
+
 
 function BuildingConfiguration() {
     const { theme } = useContext(ThemeContext);
