@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { ThemeContext } from './ThemeContext';
+import { fetchConfigurations } from './api'; // Import the fetchConfigurations function
 import axios from 'axios';
 
 function BuildingConfiguration() {
@@ -12,7 +13,12 @@ function BuildingConfiguration() {
 
 
     useEffect(() => {
-        fetchConfigurations();
+        async function fetchData() {
+            const data = await fetchConfigurations(); // Call the fetchConfigurations function
+            setConfigurations(data); // Update the state with fetched data
+        }
+
+        fetchData(); // Call the fetchData function
     }, []);
 
     const handleAddClick = () => {
