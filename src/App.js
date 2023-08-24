@@ -5,7 +5,7 @@ import Home from './Home';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
 import BuildingConfiguration from './BuildingConfiguration';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Update the import
+import { BrowserRouter as Router, Route, Routes, Redirect } from 'react-router-dom'; // Import Redirect
 
 function App() {
     const [theme, setTheme] = useState('light'); 
@@ -27,7 +27,7 @@ function App() {
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
             <Router>
                 <div className={`App ${theme}`}>
-                    <Routes> {/* Use Routes */}
+                    <Routes>
                         <Route exact path='/'>
                             <Home 
                                 isLoggedIn={isLoggedIn}
