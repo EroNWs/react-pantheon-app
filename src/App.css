@@ -2,37 +2,232 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@keyframes gradientShift {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+@keyframes slideDown {
+  0% {
+      transform: translate(-50%, -150%);
+  }
+  100% {
+      transform: translate(-50%, -50%);
+  }
+}
+@keyframes fadeInForm {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+.light {
+  background-color: white;
+  color: black;
+}
+
+.dark {
+  background-color: rgb(49, 48, 48);
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+body.light {
+  background-color: white;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+body.dark {
+  background-color: rgb(49, 48, 48);
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  /* Klips ikonunuzu eklemek için daha fazla stil ekleyebilirsiniz */
+}
+
+
+
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 10px;
+}
+
+.custom-button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #FF5733; /* Örnek bir renk */
+  border-radius: 15px; /* Yumuşak hatlar için */
+  /* Gölge efekti için gerekli stilleri ekleyebilirsiniz */
+  /* background: linear-gradient(90deg, #5ddcff, #3c67e3, #4e00c2);
+  background-size: 200% auto;
+  animation: gradientShift 5s linear infinite; */
+  
+
+}
+
+.button-wrapper {
+  position: relative;
+  display: inline-flex;  /* Bu, div'in butonları sarması için gereklidir.*/
+  align-items: center;
+  gap: 10px; 
+}
+
+.button-wrapper::before {
+  content: "";
+  position: absolute;
+  top: -15px;   /* Gölgenin butonların dışında olması için konum ayarları*/
+  bottom: -15px;
+  left: -15px;
+  right: -15px;
+  z-index: -1;  /* Gölge efektinin butonların arkasında olması için*/
+
+  background: linear-gradient(90deg, #5ddcff, #3c67e3, #4e00c2);
+  background-size: 200% auto;
+  animation: gradientShift 5s linear infinite;
+}
+
+.custom-button:hover {
+  transform: scale(1.1);  /* Butonun büyümesi için*/
+  animation-play-state: paused;  /* Animasyonun durması için*/
+}
+
+/* Önceden tanımlı stiller ... */
+
+/* Login Form */
+.login-form {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s ease-in-out;
+  width: 300px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  /* background: white; */
+  display: flex;           /* Flexbox'u etkinleştirir */
+  flex-direction: column;  /* İçerikleri dikey olarak hizalar */
+  justify-content: center; /* İçerikleri dikeyde merkezler */
+  align-items: center;     /* İçerikleri yatayda merkezler */
+  gap: 20px;               /* Öğeler arasında 20px boşluk bırakır */
+  z-index: 100;
+  animation: slideDown 0.5s ease-out forwards, fadeInShadow 0.5s ease-out 0.5s forwards;
+  
+}
+
+.login-form::before, .signUp-form::before {
+content: "";
+
+position: absolute;
+top: -10px;
+bottom: -10px;
+left: -10px;
+right: -10px;
+z-index: -1;
+box-shadow: linear-gradient(45deg,  #8a9fdf,#e82ac5, #4d0eac);
+background-size: 200% auto;
+animation: gradientShift 5s linear infinite;
+opacity: 1;
+transition: opacity 0.5s ease-out 0.5s;
+}
+
+.login-form.show {
+  transform: translate(-50%, 5%);
+}
+.dark .login-form {
+  background-color: rgb(49, 48, 48);
+  color: 49, 48, 48;
+}
+
+.light .login-form {
+  background-color: white;
+  color: black;
+}
+
+.login-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  transition: border 0.2s ease-in-out;
+  max-width: 90%; /* İçerik genişliğini sınırlar */
+}
+.dark .login-input{
+  background-color: rgb(49, 48, 48);
+}
+
+.login-input:focus {
+  border-color: #5ddcff; 
+}
+
+.login-button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 15px;
+  background-color: #FF5733;
+  color: white;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background-color: #d04020;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch-label {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.switch-label:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .switch-label {
+  background-color: #FF5733;
+}
+
+input:checked + .switch-label:before {
+  transform: translateX(26px);
 }
