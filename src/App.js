@@ -5,7 +5,7 @@ import Home from './Home'; // Import Home component
 import LoginForm from './LoginForm'; // Import LoginForm component
 import SignUpForm from './SignUpForm'; // Import SignUpForm component
 import BuildingConfiguration from './BuildingConfiguration'; // Import BuildingConfiguration component
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'; // Import Router, Route, and Switch
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import Router, Route, and Switch
 
 function App() {
     const [theme, setTheme] = useState('light'); 
@@ -28,29 +28,29 @@ function App() {
             <Router> {/* Wrap the app with Router */}
                 <div className={`App ${theme}`}>
                     {/* Render the components based on the route */}
-                    <Switch>
-                        <Route exact path="/">
+                    <Routes>
+                        <Route exact path='/'>
                             <Home 
                                 isLoggedIn={isLoggedIn}
                                 setIsLoggedIn={setIsLoggedIn}
                             />
                         </Route>
-                        <Route path="/login">
+                        <Route path='/login'>
                             <LoginForm 
                                 isLoggedIn={isLoggedIn}
                                 setIsLoggedIn={setIsLoggedIn}
                             />
                         </Route>
-                        <Route path="/sign-up">
+                        <Route path='/sign-up'>
                             <SignUpForm 
                                 isLoggedIn={isLoggedIn}
                                 setIsLoggedIn={setIsLoggedIn}
                             />
                         </Route>
-                        <Route path="/building-configuration">
-                            {isLoggedIn ? <BuildingConfiguration /> : <Redirect to="/" />}
+                        <Route path='/building-configuration'>
+                            {isLoggedIn ? <BuildingConfiguration /> : <Redirect to='/' />}
                         </Route>
-                    </Switch>
+                    </Routes>
                 </div>
             </Router>
         </ThemeContext.Provider>
