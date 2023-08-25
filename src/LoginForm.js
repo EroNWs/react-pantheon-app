@@ -22,6 +22,7 @@ function LoginForm() {
             });
             if (response.status === 200) { // Assuming your API returns a 200 status on successful login
                 // Handle successful login
+                sessionStorage.setItem('authToken', response.data.result.token);          
                 setLoginMessage('Login successful!');
                 setError(null);
                 console.log(response.data);
