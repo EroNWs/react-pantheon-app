@@ -4,7 +4,6 @@ import { fetchConfigurations } from './api'; // Import the fetchConfigurations f
 import axios from 'axios';
 import './BuildingConfiguration.css'; // Import the CSS file
 
-const API_URL = process.env.REACT_APP_API_URL;
 
 const defaultConfigurations = [
     {
