@@ -20,20 +20,21 @@ function SignUpForm() {
 
     const handleSignUp = async () => {
         try {
-            const response = await axios.post(`${API_URL}/api/ApplicationUser`, {
+            await axios.post(`${API_URL}/api/ApplicationUser`, {
                 username,
                 password,
                 email
-             });
+            });
+    
             setSuccessMessage('Registration successful!');
             setError(null); // Clear any previous error message
-            // console.log(response.data);
             navigate('/login');
         } catch (error) {
             setError('An error occurred during registration.');
             setSuccessMessage(''); // Clear any previous success message
         }
     };
+    
 
     return (
         <div className={`login-form ${theme}`}>
