@@ -5,8 +5,6 @@ import './App.css';
 
 import { ThemeContext } from './ThemeContext';
 
-const API_URL = process.env.local.REACT_APP_API_URL;
-
 function SignUpForm() {
     const navigate = useNavigate();
 
@@ -25,13 +23,15 @@ function SignUpForm() {
                 password,
                 email
             });
-            console.log(response.data);
-            setSuccessMessage('Registration successful!');
-            setError(null); // Clear any previous error message
-            navigate('/login');
+            if (response.status === 201) { // Assuming your API returns a 201 status on successful signup
+                console.log(response.data);
+                setSuccessMessage('Registration successful!');
+                setError(null);
+                navigate('/login');
+            }
         } catch (error) {
             setError('An error occurred during registration.');
-            setSuccessMessage(''); // Clear any previous success message
+            setSuccessMessage('');
         }
     };
     

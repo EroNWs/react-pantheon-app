@@ -16,15 +16,17 @@ function LoginForm() {
 
     const handleLogin = async () => {
         try {
-            const response =  await axios.post('https://pathneonapi20230824160910.azurewebsites.net/api/UserAuth/login', {
+            const response = await axios.post('https://pathneonapi20230824160910.azurewebsites.net/api/UserAuth/login', {
                 username,
                 password
             });
-            // Handle successful login
-            setLoginMessage('Login successful!');
-            setError(null); // Clear any previous error message
-            console.log(response.data);
-            navigate('/building-configuration');
+            if (response.status === 200) { // Assuming your API returns a 200 status on successful login
+                // Handle successful login
+                setLoginMessage('Login successful!');
+                setError(null);
+                console.log(response.data);
+                navigate('/building-configuration');
+            }
         } catch (error) {
             setError('Invalid credentials. Please try again.');
             setLoginMessage('');
