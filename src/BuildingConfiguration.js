@@ -65,6 +65,7 @@ function BuildingConfiguration() {
 
     const handleAddConfiguration = async () => {
         try {
+            const token = responseData.result.token; // Store the token in a variable
             const response = await axios.post(
                 'https://pathneonapi20230824160910.azurewebsites.net/api/BuildingConfiguration',
                 {
@@ -74,7 +75,7 @@ function BuildingConfiguration() {
                 },
                 {
                     headers: {
-                        Authorization: `Bearer ${response.data.result.token}`
+                        Authorization: `Bearer ${token}`
                     }
                 }
             );
