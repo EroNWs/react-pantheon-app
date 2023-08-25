@@ -65,28 +65,29 @@ function BuildingConfiguration() {
 
     const handleAddConfiguration = async () => {
         try {
-            const token = responseData.result.token; // Store the token in a variable
-            const response = await axios.post(
-                'https://pathneonapi20230824160910.azurewebsites.net/api/BuildingConfiguration',
-                {
-                    buildingType,
-                    buildingCost,
-                    constructionTime
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
+     try {
+        const token = response.data.result.token; // Use 'response' to access the token
+        const addResponse = await axios.post(
+            'https://pathneonapi20230824160910.azurewebsites.net/api/BuildingConfiguration',
+            {
+                buildingType,
+                buildingCost,
+                constructionTime
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
-            );
+            }
+        );
             const newConfiguration = {
-                id: response.data.id, // Assuming your API returns the ID of the newly added configuration
+                id: addResponse.data.id, // Assuming your API returns the ID of the newly added configuration
                 buildingType,
                 buildingCost,
                 constructionTime
             };
             // Refresh configurations after successful addition
-            console.log(response.data);
+            console.log(addResponse.data);
             setConfigurations(prevConfigurations => [...prevConfigurations, newConfiguration]);
             setShowAddModal(false);
             setBuildingType('');
