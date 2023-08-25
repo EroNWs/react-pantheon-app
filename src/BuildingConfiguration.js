@@ -65,14 +65,20 @@ function BuildingConfiguration() {
 
     const handleAddConfiguration = async () => {
         try {
-            var response =  await axios.post('https://pathneonapi20230824160910.azurewebsites.net/api/BuildingConfiguration', {
+            const response = await axios.post('https://pathneonapi20230824160910.azurewebsites.net/api/BuildingConfiguration', {
                 buildingType,
                 buildingCost,
                 constructionTime
             });
+            const newConfiguration = {
+                id: response.data.id, // Assuming your API returns the ID of the newly added configuration
+                buildingType,
+                buildingCost,
+                constructionTime
+            };
             // Refresh configurations after successful addition
             console.log(response.data);
-            fetchConfigurations();
+            setConfigurations(prevConfigurations => [...prevConfigurations, newConfiguration]);
             setShowAddModal(false);
             setBuildingType('');
             setBuildingCost('');
@@ -91,41 +97,42 @@ function BuildingConfiguration() {
             <h2>Building Configurations</h2>
             <button className="add-button" onClick={handleAddClick}>Click the Button to Add</button>
             <table>
-                <thead>
-                    <tr>
-                        <th>Building Type</th>
-                        <th>Building Cost</th>
-                        <th>Construction Time</th>
+            <thead>
+                <tr>
+                    <th>Building Type</th>
+                    <th>Building Cost</th>
+                    <th>Construction Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {configurations.map(config => (
+                    <tr key={config.id}>
+                        <td>{config.buildingType}</td>
+                        <td>{config.buildingCost}</td>
+                        <td>{config.constructionTime}</td>
                     </tr>
-                </thead>
-                <tbody>
-                    {configurations.map(config => (
-                        <tr key={config.id}>
-                            <td>{config.buildingType}</td>
-                            <td>{config.buildingCost}</td>
-                            <td>{config.constructionTime}</td>
-                        </tr>
-                    ))}
-                </tbody>
+                ))}
+            </tbody>
             </table>
             {showAddModal && (
-                <div className="modal">
-                    <h3>Add Configuration</h3>
-                    <select value={buildingType} onChange={e => setBuildingType(e.target.value)}>
-                        {defaultConfigurations.map(config => (
-                            <option key={config.id} value={configurations.buildingType} disabled={defaultConfigurations.some(defaultConfig => defaultConfig.buildingType === configurations.buildingType)}>
-                                {config.buildingType}
-                            </option>
-                        ))}
-                    </select>
-                    <input style={cssStyle.inputStyle} type="number" placeholder="Building Cost" value={buildingCost} onChange={e => setBuildingCost(e.target.value)} />
-                    <input style={cssStyle.inputStyle} type="number" placeholder="Construction Time" value={constructionTime} onChange={e => setConstructionTime(e.target.value)} />
-                    <div>
-                        <button style={cssStyle.buttonStyle} onClick={handleAddConfiguration}>OK</button>
-                        <button style={cssStyle.buttonStyle} onClick={() => setShowAddModal(false)}>Cancel</button>
-                    </div>
-                </div>
-            )}
+    <div className="modal">
+        <h3>Add Configuration</h3>
+        <select value={buildingType} onChange={e => setBuildingType(e.target.value)}>
+            {defaultConfigurations.map(config => (
+                <option key={config.id} value={config.buildingType} disabled={config.buildingType === buildingType}>
+                    {config.buildingType}
+                </option>
+            ))}
+        </select>
+        <input style={cssStyle.inputStyle} type="number" placeholder="Building Cost" value={buildingCost} onChange={e => setBuildingCost(e.target.value)} />
+        <input style={cssStyle.inputStyle} type="number" placeholder="Construction Time" value={constructionTime} onChange={e => setConstructionTime(e.target.value)} />
+        <div>
+            <button style={cssStyle.buttonStyle} onClick={handleAddConfiguration}>ADD</button>
+            <button style={cssStyle.buttonStyle} onClick={() => setShowAddModal(false)}>Cancel</button>
+        </div>
+    </div>
+)}
+
         </div>
     );
 }
