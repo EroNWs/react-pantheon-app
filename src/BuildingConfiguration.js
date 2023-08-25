@@ -30,7 +30,8 @@ const cssStyle = {
         padding: '10px',
         borderRadius: '10px',
         fontFamily: 'Arial, sans-serif',
-        fontSize: '15px'
+        fontSize: '15px',
+        width:'80%'
     },
     buttonStyle: {
         margin: '10px',
@@ -88,7 +89,7 @@ function BuildingConfiguration() {
     return (
         <div className={`building-configuration ${theme}`}>
             <h2>Building Configurations</h2>
-            <button className="add-button" onClick={handleAddClick}>Add</button>
+            <button className="add-button" onClick={handleAddClick}>Click the Button to Add</button>
             <table>
                 <thead>
                     <tr>
