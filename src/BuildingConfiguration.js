@@ -24,6 +24,14 @@ const cssStyle = {
 }
 
 function getBuildingTypeText(buildingValue) {
+    const BuildingTypes = {
+        Farm: 1,
+        Academy: 2,
+        Headquarters: 3,
+        LumberMill: 4,
+        Barracks: 5
+    };
+
     switch (buildingValue) {
         case BuildingTypes.Farm: return 'Farm';
         case BuildingTypes.Academy: return 'Academy';
