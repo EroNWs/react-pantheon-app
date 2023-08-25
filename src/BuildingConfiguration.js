@@ -5,25 +5,6 @@ import axios from 'axios';
 import './BuildingConfiguration.css'; // Import the CSS file
 
 
-const defaultConfigurations = [
-    {
-        id: 1,
-        buildingType: 'Farm',
-    },
-    {
-        id: 2,
-        buildingType: 'Academy',
-    },
-    {
-        id: 3,
-        buildingType: 'Headquarters',
-    },
-    {
-        id: 4,
-        buildingType: 'LumberMill',
-    }
-]
-
 const cssStyle = {
     inputStyle: {
         margin: '10px',
