@@ -154,13 +154,14 @@ function BuildingConfiguration() {
         <h3>Add Configuration</h3>
         <select value={buildingType} onChange={e => setBuildingType(e.target.value)}>
     {Object.keys(BuildingTypes)
-        .filter(type => !configurations.some(config => config.buildingType === type))
+        .filter(type => !configurations.some(config => config.buildingType === BuildingTypes[type]))
         .map(type => (
             <option key={BuildingTypes[type]} value={type}>
                 {type}
             </option>
         ))}
 </select>
+
 
         <input style={cssStyle.inputStyle} type="number" placeholder="Building Cost" value={buildingCost} onChange={e => setBuildingCost(e.target.value)} />
         {buildingCost < 0 && <p className="error-message">Building cost cannot be negative.</p>}

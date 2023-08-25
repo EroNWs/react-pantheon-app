@@ -37,8 +37,8 @@ function LoginForm() {
     return (
         <div className={`login-form ${theme}`}>
             <h2>Login</h2>
-            <input type="text" placeholder="Username" className="login-input" value={username} onChange={e => setUsername(e.target.value)} />
-            <input type="password" placeholder="Password" className="login-input" value={password} onChange={e => setPassword(e.target.value)} />
+            <input type="text" placeholder="Username" className="login-input" value={username} onChange={e => setUsername(e.target.value)} required/>
+            <input type="password" placeholder="Password" className="login-input" value={password} onChange={e => setPassword(e.target.value)} required/>
             {error && <p className="error-message">{error}</p>}
             {loginMessage && <p className="success-message">{loginMessage}</p>}
             <button className="login-button" onClick={handleLogin}>Login</button>
