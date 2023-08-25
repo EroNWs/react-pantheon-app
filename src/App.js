@@ -28,7 +28,7 @@ function App() {
                 <Router>
                     <Routes>
                         <RouteElement path="/" element={<Home />} />
-                        <RouteElement path="/build-configuration" element={<BuildingConfiguration />} />
+                        <RouteElement path="/building-configuration" element={<BuildingConfiguration />} />
                         <RouteElement path="/login" element={< LoginForm />} />
                         <RouteElement path="/signup" element={< SignUpForm />} />
                     </Routes>
