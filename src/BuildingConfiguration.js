@@ -65,12 +65,13 @@ function BuildingConfiguration() {
 
     const handleAddConfiguration = async () => {
         try {
-            await axios.post(`${API_URL}/api/BuildingConfiguration`, {
+            var response = await axios.post(`${API_URL}/api/BuildingConfiguration`, {
                 buildingType,
                 buildingCost,
                 constructionTime
             });
             // Refresh configurations after successful addition
+            console.log(response.data);
             fetchConfigurations();
             setShowAddModal(false);
             setBuildingType('');
