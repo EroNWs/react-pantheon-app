@@ -31,7 +31,7 @@ function SignUpForm() {
                 navigate('/login');
             }
         } catch (error) {
-            setError('An error occurred during registration.');
+            setError('An error occurred during registration. Email or UserName may exist');
             setSuccessMessage('');
         }
     };

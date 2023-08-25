@@ -93,9 +93,10 @@ function BuildingConfiguration() {
             const addResponse = await axios.post(
                 'https://pathneonapi20230824160910.azurewebsites.net/api/BuildingConfiguration',
                 {
-                    buildingType: buildingTypeEnumValue,
                     buildingCost,
-                    constructionTime
+                    constructionTime,
+                    buildingType: buildingTypeEnumValue                    
+                    
                 },
                 {
                     headers: {
@@ -163,7 +164,9 @@ function BuildingConfiguration() {
 </select>
 
         <input style={cssStyle.inputStyle} type="number" placeholder="Building Cost" value={buildingCost} onChange={e => setBuildingCost(e.target.value)} />
+        {buildingCost < 0 && <p className="error-message">Building cost cannot be negative.</p>}
         <input style={cssStyle.inputStyle} type="number" placeholder="Construction Time" value={constructionTime} onChange={e => setConstructionTime(e.target.value)} />
+        {(constructionTime < 30 || constructionTime > 1800) && <p className="error-message">Construction time must be between 30 and 1800 seconds.</p>}
         <div>
             <button style={cssStyle.buttonStyle} onClick={handleAddConfiguration}>ADD</button>
             <button style={cssStyle.buttonStyle} onClick={() => setShowAddModal(false)}>Cancel</button>
