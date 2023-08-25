@@ -49,6 +49,16 @@ function BuildingConfiguration() {
     const [buildingType, setBuildingType] = useState('');
     const [buildingCost, setBuildingCost] = useState('');
     const [constructionTime, setConstructionTime] = useState('');
+    const BuildingTypes = {
+        Farm: 1,
+        Academy: 2,
+        Headquarters: 3,
+        LumberMill: 4,
+        Barracks: 5
+    };
+    const buildingTypeEnumValue = buildingType; // Since you're using the numeric values
+
+    
 
     useEffect(() => {
         async function fetchData() {
@@ -73,7 +83,7 @@ function BuildingConfiguration() {
             const addResponse = await axios.post(
                 'https://pathneonapi20230824160910.azurewebsites.net/api/BuildingConfiguration',
                 {
-                    buildingType,
+                    buildingType: buildingTypeEnumValue,
                     buildingCost,
                     constructionTime
                 },
@@ -130,13 +140,14 @@ function BuildingConfiguration() {
             {showAddModal && (
     <div className="modal">
         <h3>Add Configuration</h3>
-        <select value={buildingType} onChange={e => setBuildingType(e.target.value)}>
-            {defaultConfigurations.map(config => (
-                <option key={config.id} value={config.buildingType} disabled={config.buildingType === buildingType}>
-                    {config.buildingType}
-                </option>
-            ))}
-        </select>
+            <select value={buildingType} onChange={e => setBuildingType(e.target.value)}>
+            {Object.keys(BuildingTypes).map(type => (
+            <option key={BuildingTypes[type]} value={BuildingTypes[type]}>
+                {type}
+            </option>
+                ))}
+            </select>
+
         <input style={cssStyle.inputStyle} type="number" placeholder="Building Cost" value={buildingCost} onChange={e => setBuildingCost(e.target.value)} />
         <input style={cssStyle.inputStyle} type="number" placeholder="Construction Time" value={constructionTime} onChange={e => setConstructionTime(e.target.value)} />
         <div>
