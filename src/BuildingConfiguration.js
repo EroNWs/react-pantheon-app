@@ -23,6 +23,17 @@ const cssStyle = {
     }
 }
 
+function getBuildingTypeText(buildingValue) {
+    switch (buildingValue) {
+        case BuildingTypes.Farm: return 'Farm';
+        case BuildingTypes.Academy: return 'Academy';
+        case BuildingTypes.Headquarters: return 'Headquarters';
+        case BuildingTypes.LumberMill: return 'Lumber Mill';
+        case BuildingTypes.Barracks: return 'Barracks';
+        default: return '';
+    }
+}
+
 function BuildingConfiguration() {
     const { theme } = useContext(ThemeContext);
     const [configurations, setConfigurations] = useState([]);
@@ -30,6 +41,7 @@ function BuildingConfiguration() {
     const [buildingType, setBuildingType] = useState('');
     const [buildingCost, setBuildingCost] = useState('');
     const [constructionTime, setConstructionTime] = useState('');
+    const [addSuccessMessage, setAddSuccessMessage] = useState('');
     const BuildingTypes = {
         Farm: 1,
         Academy: 2,
@@ -37,6 +49,7 @@ function BuildingConfiguration() {
         LumberMill: 4,
         Barracks: 5
     };
+
     const buildingTypeEnumValue = buildingType; // Since you're using the numeric values
 
     
@@ -60,7 +73,15 @@ function BuildingConfiguration() {
                 console.error('Authentication token not found.');
                 return;
             }
+            if (constructionTime < 30 || constructionTime > 1800) {
+                console.error('Construction time must be between 30 and 1800 seconds.');
+                return;
+            }
     
+            if (buildingCost < 0) {
+                console.error('Building cost cannot be negative.');
+                return;
+            }
             const addResponse = await axios.post(
                 'https://pathneonapi20230824160910.azurewebsites.net/api/BuildingConfiguration',
                 {
@@ -87,6 +108,7 @@ function BuildingConfiguration() {
             setBuildingType('');
             setBuildingCost('');
             setConstructionTime('');
+            setAddSuccessMessage('Configuration added successfully!');
         } catch (error) {
             console.error('Error adding configuration:', error);
         }
@@ -100,6 +122,7 @@ function BuildingConfiguration() {
         <div className={`building-configuration ${theme}`}>
             <h2>Building Configurations</h2>
             <button className="add-button" onClick={handleAddClick}>Click the Button to Add</button>
+            {addSuccessMessage && <p className="success-message">{addSuccessMessage}</p>}
             <table>
             <thead>
                 <tr>
@@ -111,7 +134,7 @@ function BuildingConfiguration() {
             <tbody>
                 {configurations.map(config => (
                     <tr key={config.id}>
-                        <td>{config.buildingType}</td>
+                        <td>{getBuildingTypeText(config.buildingType)}</td>
                         <td>{config.buildingCost}</td>
                         <td>{config.constructionTime}</td>
                     </tr>
@@ -121,13 +144,15 @@ function BuildingConfiguration() {
             {showAddModal && (
     <div className="modal">
         <h3>Add Configuration</h3>
-            <select value={buildingType} onChange={e => setBuildingType(e.target.value)}>
-            {Object.keys(BuildingTypes).map(type => (
-            <option key={BuildingTypes[type]} value={BuildingTypes[type]}>
+        <select value={buildingType} onChange={e => setBuildingType(e.target.value)}>
+    {Object.keys(BuildingTypes)
+        .filter(type => !configurations.some(config => config.buildingType === type))
+        .map(type => (
+            <option key={BuildingTypes[type]} value={type}>
                 {type}
             </option>
-                ))}
-            </select>
+        ))}
+</select>
 
         <input style={cssStyle.inputStyle} type="number" placeholder="Building Cost" value={buildingCost} onChange={e => setBuildingCost(e.target.value)} />
         <input style={cssStyle.inputStyle} type="number" placeholder="Construction Time" value={constructionTime} onChange={e => setConstructionTime(e.target.value)} />

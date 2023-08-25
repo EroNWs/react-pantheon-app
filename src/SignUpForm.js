@@ -24,7 +24,7 @@ function SignUpForm() {
                 email
             });
             console.log(response.data);
-            if (response.status === 204) { // Assuming your API returns a 204 status on successful signup
+            if (response.status === 200) { // Assuming your API returns a 204 status on successful signup
                 console.log(response.data);
                 setSuccessMessage('Registration successful!');
                 setError(null);
