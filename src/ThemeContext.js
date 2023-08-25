@@ -1,6 +1,8 @@
 import { createContext } from 'react';
-//s
+
+const REACT_APP_THEME = process.env.REACT_APP_THEME;
+
 export const ThemeContext = createContext({
-  theme: 'light', // varsayılan tema
-  toggleTheme: () => {} // temayı değiştirmek için boş bir fonksiyon
+  theme: REACT_APP_THEME, // default theme
+  toggleTheme: () => {} // function for change theme 
 });

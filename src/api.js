@@ -1,9 +1,10 @@
 // api.js
 import axios from 'axios';
+const API_URL = process.env.REACT_APP_API_URL;
 
 export const fetchConfigurations = async () => {
     try {
-        const response = await axios.get('https://pathneonapi20230824160910.azurewebsites.net/api/BuildingConfiguration');
+        const response = await axios.get(`${API_URL}/api/BuildingConfiguration`);
         return response.data; 
     } catch (error) {
         console.error('Error fetching configurations:', error);

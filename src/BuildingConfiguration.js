@@ -4,6 +4,43 @@ import { fetchConfigurations } from './api'; // Import the fetchConfigurations f
 import axios from 'axios';
 import './BuildingConfiguration.css'; // Import the CSS file
 
+const API_URL = process.env.REACT_APP_API_URL;
+
+const defaultConfigurations = [
+    {
+        id: 1,
+        buildingType: 'Farm',
+    },
+    {
+        id: 2,
+        buildingType: 'Academy',
+    },
+    {
+        id: 3,
+        buildingType: 'Headquarters',
+    },
+    {
+        id: 4,
+        buildingType: 'LumberMill',
+    }
+]
+
+const cssStyle = {
+    inputStyle: {
+        margin: '10px',
+        padding: '10px',
+        borderRadius: '10px',
+        fontFamily: 'Arial, sans-serif',
+        fontSize: '15px'
+    },
+    buttonStyle: {
+        margin: '10px',
+        fontFamily: 'Arial, sans-serif',
+        borderRadius: '10px',
+        fontSize: '20px',
+        padding: '10px 20px',
+    }
+}
 
 function BuildingConfiguration() {
     const { theme } = useContext(ThemeContext);
@@ -26,13 +63,9 @@ function BuildingConfiguration() {
         fetchData(); // Call the fetchData function
     }, []);
 
-    const handleAddClick = () => {
-        setShowAddModal(true);
-    };
-
     const handleAddConfiguration = async () => {
         try {
-            await axios.post('https://pathneonapi20230824160910.azurewebsites.net/api/BuildingConfiguration', {
+            await axios.post(`${API_URL}/api/BuildingConfiguration`, {
                 buildingType,
                 buildingCost,
                 constructionTime
@@ -46,6 +79,10 @@ function BuildingConfiguration() {
         } catch (error) {
             console.error('Error adding configuration:', error);
         }
+    };
+
+    const handleAddClick = () => {
+        setShowAddModal(true);
     };
 
     return (
@@ -74,16 +111,18 @@ function BuildingConfiguration() {
                 <div className="modal">
                     <h3>Add Configuration</h3>
                     <select value={buildingType} onChange={e => setBuildingType(e.target.value)}>
-                        <option value="Farm">Farm</option>
-                        <option value="Academy">Academy</option>
-                        <option value="Headquarters">Headquarters</option>
-                        <option value="LumberMill">LumberMill</option>
-                        <option value="Barracks">Barracks</option>
+                        {defaultConfigurations.map(config => (
+                            <option key={config.id} value={configurations.buildingType} disabled={defaultConfigurations.some(defaultConfig => defaultConfig.buildingType === configurations.buildingType)}>
+                                {config.buildingType}
+                            </option>
+                        ))}
                     </select>
-                    <input type="number" placeholder="Building Cost" value={buildingCost} onChange={e => setBuildingCost(e.target.value)} />
-                    <input type="number" placeholder="Construction Time" value={constructionTime} onChange={e => setConstructionTime(e.target.value)} />
-                    <button onClick={handleAddConfiguration}>OK</button>
-                    <button onClick={() => setShowAddModal(false)}>Cancel</button>
+                    <input style={cssStyle.inputStyle} type="number" placeholder="Building Cost" value={buildingCost} onChange={e => setBuildingCost(e.target.value)} />
+                    <input style={cssStyle.inputStyle} type="number" placeholder="Construction Time" value={constructionTime} onChange={e => setConstructionTime(e.target.value)} />
+                    <div>
+                        <button style={cssStyle.buttonStyle} onClick={handleAddConfiguration}>OK</button>
+                        <button style={cssStyle.buttonStyle} onClick={() => setShowAddModal(false)}>Cancel</button>
+                    </div>
                 </div>
             )}
         </div>

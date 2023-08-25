@@ -1,9 +1,13 @@
-import React, { useContext, useState } from 'react';
-import { ThemeContext } from './ThemeContext';
-import './App.css';
-import axios from 'axios'; // Import Axios
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-function LoginForm({ onClose }) {
+import { ThemeContext } from './ThemeContext';
+const API_URL = process.env.REACT_APP_API_URL;
+
+function LoginForm() {
+    const navigate = useNavigate();
+
     const { theme } = useContext(ThemeContext);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -12,17 +16,18 @@ function LoginForm({ onClose }) {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('https://pathneonapi20230824160910.azurewebsites.net/api/UserAuth/login', {
+            const response = await axios.post(`${API_URL}/api/UserAuth/login`, {
                 username,
                 password
             });
             // Handle successful login
-            setLoginMessage('Login successful!'); // Update login message state
+            setLoginMessage('Login successful!');
             setError(null); // Clear any previous error message
             console.log(response.data);
+            navigate('/building-configuration');
         } catch (error) {
-            setError('Invalid credentials. Please try again.'); // Update error state
-            setLoginMessage(''); // Clear any previous login message
+            setError('Invalid credentials. Please try again.');
+            setLoginMessage('');
         }
     };
 
@@ -34,7 +39,7 @@ function LoginForm({ onClose }) {
             {error && <p className="error-message">{error}</p>}
             {loginMessage && <p className="success-message">{loginMessage}</p>}
             <button className="login-button" onClick={handleLogin}>Login</button>
-            <button className="login-button" onClick={onClose}>Close</button>
+            <button className="login-button" onClick={() => { navigate('/') }}>Close</button>
         </div>
     );
 }

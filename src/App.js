@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react'; // Import React and hooks
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Link, Routes, Route as RouteElement } from 'react-router-dom';
 import './App.css';
 import { ThemeContext } from './ThemeContext';
-import Home from './Home'; // Import Home component
-import LoginForm from './LoginForm'; // Import LoginForm component
-import SignUpForm from './SignUpForm'; // Import SignUpForm component
-import BuildingConfiguration from './BuildingConfiguration'; // Import BuildingConfiguration component
+import Home from './Home';
+import LoginForm from './LoginForm';
+import SignUpForm from './SignUpForm';
+import BuildingConfiguration from './BuildingConfiguration';
 
 function App() {
-    const [theme, setTheme] = useState('light'); 
-    const [showLogin, setShowLogin] = useState(false);
-    const [showSignUp, setShowSignUp] = useState(false);
+    const [theme, setTheme] = useState('light');
 
     useEffect(() => {
-        document.body.className = theme; 
+        document.body.className = theme;
     }, [theme]);
 
     const toggleTheme = () => {
@@ -26,14 +25,14 @@ function App() {
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
             <div className={`App ${theme}`}>
-                <Home 
-                    onLoginClick={() => setShowLogin(true)} 
-                    onSignUpClick={() => setShowSignUp(true)}
-                />
-                {showLogin && <LoginForm onClose={() => setShowLogin(false)} />}
-                {showSignUp && <SignUpForm onClose={() => setShowSignUp(false)} />}
-                
-                <BuildingConfiguration /> {/* Add BuildingConfiguration component */}
+                <Router>
+                    <Routes>
+                        <RouteElement path="/" element={<Home />} />
+                        <RouteElement path="/build-configuration" element={<BuildingConfiguration />} />
+                        <RouteElement path="/login" element={< LoginForm />} />
+                        <RouteElement path="/signup" element={< SignUpForm />} />
+                    </Routes>
+                </Router>
             </div>
         </ThemeContext.Provider>
     );
