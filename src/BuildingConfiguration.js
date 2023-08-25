@@ -64,6 +64,7 @@ function BuildingConfiguration() {
         async function fetchData() {
             try {
                 const data = await fetchConfigurations(); // Call the fetchConfigurations function
+                console.log(data);
                 setConfigurations(data); // Update the state with fetched data
             } catch (error) {
                 console.error('Error fetching configurations:', error);
@@ -104,7 +105,7 @@ function BuildingConfiguration() {
             );
             const newConfiguration = {
                 id: addResponse.data.id, // Assuming your API returns the ID of the newly added configuration
-                buildingType,
+                buildingType: BuildingTypes[buildingType],
                 buildingCost,
                 constructionTime
             };
@@ -138,15 +139,15 @@ function BuildingConfiguration() {
                     <th>Construction Time</th>
                 </tr>
             </thead>
-            <tbody>
-                {configurations.map(config => (
-                    <tr key={config.id}>
-                        <td>{getBuildingTypeText(config.buildingType)}</td>
-                        <td>{config.buildingCost}</td>
-                        <td>{config.constructionTime}</td>
-                    </tr>
-                ))}
-            </tbody>
+        <tbody>
+            {configurations.map(config => (
+                <tr key={config.id}>
+                    <td>{getBuildingTypeText(config.buildingType)}</td>
+                    <td>{config.buildingCost}</td>
+                    <td>{config.constructionTime}</td>
+                </tr>
+            ))}
+        </tbody>
             </table>
             {showAddModal && (
     <div className="modal">
