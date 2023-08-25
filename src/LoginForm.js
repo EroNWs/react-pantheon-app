@@ -16,7 +16,7 @@ function LoginForm() {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post(`${API_URL}/api/UserAuth/login`, {
+            const response =  await axios.post('https://pathneonapi20230824160910.azurewebsites.net/api/UserAuth/login', {
                 username,
                 password
             });
