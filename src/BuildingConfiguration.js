@@ -56,9 +56,7 @@ function BuildingConfiguration() {
         Headquarters: 3,
         LumberMill: 4,
         Barracks: 5
-    };
-
-    const buildingTypeEnumValue = buildingType; // Since you're using the numeric values
+    };   
 
     
 
