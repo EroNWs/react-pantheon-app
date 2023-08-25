@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Import Axios
 import './App.css';
 
 import { ThemeContext } from './ThemeContext';
@@ -19,11 +20,11 @@ function SignUpForm() {
 
     const handleSignUp = async () => {
         try {
-             const response = await axios.post(`${API_URL}/api/ApplicationUser`, {
+            const response = await axios.post(`${API_URL}/api/ApplicationUser`, {
                 username,
                 password,
                 email
-            });
+             });
             setSuccessMessage('Registration successful!');
             setError(null); // Clear any previous error message
             // console.log(response.data);
