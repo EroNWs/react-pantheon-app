@@ -23,6 +23,7 @@ function SignUpForm() {
                 password,
                 email
             });
+            console.log(response.data);
             if (response.status === 201) { // Assuming your API returns a 201 status on successful signup
                 console.log(response.data);
                 setSuccessMessage('Registration successful!');
