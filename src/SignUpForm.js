@@ -5,7 +5,7 @@ import './App.css';
 
 import { ThemeContext } from './ThemeContext';
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.local.REACT_APP_API_URL;
 
 function SignUpForm() {
     const navigate = useNavigate();
@@ -20,7 +20,7 @@ function SignUpForm() {
 
     const handleSignUp = async () => {
         try {
-            const response = await axios.post(`${API_URL}/api/ApplicationUser`, {
+            const response = await axios.post('https://pathneonapi20230824160910.azurewebsites.net/api/ApplicationUser', {
                 username,
                 password,
                 email

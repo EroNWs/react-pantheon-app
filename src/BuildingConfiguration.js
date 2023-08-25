@@ -65,7 +65,7 @@ function BuildingConfiguration() {
 
     const handleAddConfiguration = async () => {
         try {
-            var response = await axios.post(`${API_URL}/api/BuildingConfiguration`, {
+            var response =  await axios.post('https://pathneonapi20230824160910.azurewebsites.net/api/BuildingConfiguration', {
                 buildingType,
                 buildingCost,
                 constructionTime
