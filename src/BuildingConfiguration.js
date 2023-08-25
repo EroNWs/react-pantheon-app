@@ -65,11 +65,19 @@ function BuildingConfiguration() {
 
     const handleAddConfiguration = async () => {
         try {
-            const response = await axios.post('https://pathneonapi20230824160910.azurewebsites.net/api/BuildingConfiguration', {
-                buildingType,
-                buildingCost,
-                constructionTime
-            });
+            const response = await axios.post(
+                'https://pathneonapi20230824160910.azurewebsites.net/api/BuildingConfiguration',
+                {
+                    buildingType,
+                    buildingCost,
+                    constructionTime
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${response.data.result.token}`
+                    }
+                }
+            );
             const newConfiguration = {
                 id: response.data.id, // Assuming your API returns the ID of the newly added configuration
                 buildingType,
