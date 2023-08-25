@@ -9,7 +9,7 @@ const cssStyle = {
     inputStyle: {
         margin: '10px',
         padding: '10px',
-        borderRadius: '10px',
+        borderRadius: '15px',
         fontFamily: 'Arial, sans-serif',
         fontSize: '15px',
         width:'80%'
@@ -17,7 +17,7 @@ const cssStyle = {
     buttonStyle: {
         margin: '10px',
         fontFamily: 'Arial, sans-serif',
-        borderRadius: '10px',
+        borderRadius: '15px',
         fontSize: '20px',
         padding: '10px 20px',
     }
@@ -81,13 +81,13 @@ function BuildingConfiguration() {
                 console.error('Authentication token not found.');
                 return;
             }
-            if (constructionTime < 30 || constructionTime > 1800) {
+            if (constructionTime <= 30 || constructionTime >= 1800) {
                 console.error('Construction time must be between 30 and 1800 seconds.');
                 return;
             }
     
             if (buildingCost < 0) {
-                console.error('Building cost cannot be negative.');
+                console.error('Building cost cannot be negative or zero.');
                 return;
             }
             const addResponse = await axios.post(
@@ -95,7 +95,7 @@ function BuildingConfiguration() {
                 {
                     buildingCost,
                     constructionTime,
-                    buildingType: buildingTypeEnumValue                    
+                    buildingType: BuildingTypes[buildingType]                    
                     
                 },
                 {
