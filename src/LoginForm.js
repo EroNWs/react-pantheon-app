@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { ThemeContext } from './ThemeContext';
-const API_URL = process.env.REACT_APP_API_URL;
+
 
 function LoginForm() {
     const navigate = useNavigate();
